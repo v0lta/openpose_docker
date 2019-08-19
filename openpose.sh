@@ -25,5 +25,5 @@ nvidia-docker run\
     -v "$1":/home/user/data\
     -v "$2":/home/user/output\
     --rm\
-    -it jutanke/openpose\
+    -it openpose\
     /bin/bash exec_img.sh

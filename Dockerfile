@@ -32,13 +32,7 @@ RUN apt-get install -y libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev \
     libgphoto2-dev libeigen3-dev libhdf5-dev doxygen
 
 
-
-RUN apt-get install -y python-dev python-pip python3-dev python3-pip
-RUN pip2 install -U pip numpy
-RUN pip3 install -U pip numpy
-
 # ---- OPENCV ----
-
 RUN apt-get install libeigen3-dev
 ENV CPLUS_INCLUDE_PATH /usr/local/include/eigen3/
 RUN cd /home && git clone https://github.com/opencv/opencv.git
@@ -54,6 +48,13 @@ RUN cd /home/opencv/build && cmake -D CMAKE_BUILD_TYPE=RELEASE \
         -D WITH_OPENGL=OFF \
         -D BUILD_EXAMPLES=OFF ..
 RUN cd /home/opencv/build && make -j12 && make install
+
+
+# ---- PYTHON ----
+RUN apt-get install -y python-dev python-pip python3-dev python3-pip
+RUN apt-get install -y ipython3
+RUN pip3 install -U pip numpy opencv-python
+RUN pip3 install -U imageio imageio-ffmpeg matplotlib ipdb
 
 # --- OPENPOSE ----
 RUN apt purge -y cmake-qt-gui cmake
