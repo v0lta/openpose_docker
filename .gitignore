@@ -4,6 +4,7 @@ __pycache__/
 *$py.class
 *.txt
 *.mp4
+*.png
 output/
 
 # C extensions

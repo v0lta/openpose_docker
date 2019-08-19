@@ -127,13 +127,28 @@ for frame_no, frame in enumerate(vid):
         # plt.plot(joints_xyz[1:14, 0], joints_xyz[1:14, 1], '.')
         # plt.show()
 
+        # heat depth-plot.
+        heat_sum = ls_heat + rs_heat + rh_heat + lh_heat
+        heat_sum_norm = heat_sum / np.max(heat_sum)
+        heat_sum_norm = (heat_sum_norm*255).astype(dtype='uint8')
+        depth_frame_norm = np.stack([depth_frame_norm,
+                                     depth_frame_norm,
+                                     depth_frame_norm], -1)
+        depth_frame_norm = (depth_frame_norm*255).astype(dtype='uint8')
+        heatmap_color = cv2.applyColorMap(heat_sum_norm, cv2.COLORMAP_JET)
+        combined_depth = cv2.addWeighted(depth_frame_norm, 0.5, heatmap_color, 0.5, 0)
+
         # ipdb.set_trace()
         fig = plt.figure()
-        ax = fig.add_subplot(121)
+        ax = fig.add_subplot(131)
         ax.imshow(datum.cvOutputData)
+        plt.axis('off')
 
-        ax = fig.add_subplot(122, projection='3d')
+        ax = fig.add_subplot(132)
+        ax.imshow(combined_depth)
+        plt.axis('off')
 
+        ax = fig.add_subplot(133, projection='3d')
         left_shoulder = joints_xyz[5, :]
         right_shoulder = joints_xyz[2, :]
         left_hip = joints_xyz[11, :]
