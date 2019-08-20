@@ -1,3 +1,9 @@
+'''
+Torso normal estimation from depth and pose data.
+Using a dockerized version of open-pose:
+https://github.com/CMU-Perceptual-Computing-Lab/openpose
+'''
+
 import cv2
 import sys
 import time
@@ -9,6 +15,7 @@ from mpl_toolkits.mplot3d import Axes3D
 sys.path.append('/usr/local/python')
 import openpose.pyopenpose as op
 
+# Set the openpose parameters.
 params = dict()
 params['model_folder'] = '/home/openpose/models/'
 params['model_pose'] = "BODY_25"
@@ -22,8 +29,9 @@ opWrapper = op.WrapperPython()
 opWrapper.configure(params)
 opWrapper.start()
 
+# Location of the RGB video
 filename = '/home/video_input/Nils1/Nils1_with_frame_numbers.mp4'
-# open the depth video as well.
+# Location of the depth video.
 filename_depth = '/home/video_input/Nils1/Nils_Depth1_with_frame_numbers.mp4'
 
 
@@ -31,6 +39,7 @@ vid = imageio.get_reader(filename, 'ffmpeg')
 vid_depth = imageio.get_reader(filename_depth, 'ffmpeg')
 
 
+# Open a video writer for evaluation.
 plot = False
 write_movie = True
 if write_movie:
@@ -39,7 +48,6 @@ if write_movie:
 for frame_no, frame in enumerate(vid):
 
     start = time.time()
-
     depth_frame = vid_depth.get_next_data()[..., 0]
     depth_frame_norm = depth_frame/np.max(depth_frame)
 
