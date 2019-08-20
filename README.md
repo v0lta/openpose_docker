@@ -40,6 +40,5 @@ If you just want to visualize your images using Openpose you can use the followi
 ```
 
 ### Torso-Normal from depth data.
-Edit the path descriptions in torso_docker_run.sh the first should refed to this folder
-the second should link to the location of the data-set.
-Within the container cd to /home/openpose_docker and execute orientation_estimation.py.
+Edit the path descriptions in ``torso_docker_run.sh`` the first path should refer to the location of this folder the second should link to the location of the data-set.
+Within the container cd to ``/home/openpose_docker`` and execute ``orientation_estimation.py``.
